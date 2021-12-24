@@ -4,23 +4,31 @@ import { CONTENT_INDEX } from '../../constants/root'
 
 class AnimeCardsList {
   async render() {
-    const animeData = await Api.getData('/search/anime', { q: 'monogatari', page: 1, limit: 10 })
+    const animeData = await Api.searchAnimeByName('monogatari')
     let htmlContent = ''
-    animeData.forEach((anime) => {
+    console.log(animeData)
+    animeData.forEach(async (anime) => {
       const { mal_id: id, title, image_url: imgUrl } = anime
-      htmlContent += `
+      const uri = (htmlContent += `
           <li class=${styles.card}>
-            <button class=${styles.btn}>
+            <button class=${styles.btn} id='card-button' data-id='${id}'>
               <span class=${styles.title}>${title}</span>
               <img class=${styles.image} src=${imgUrl}/>
             </button>
           </li>
-      `
+      `)
     })
 
     const htmlWrapper = `<ul class=${styles.wrapper}>${htmlContent}</ul>`
 
     CONTENT_INDEX.innerHTML = htmlWrapper
+    document.querySelectorAll('#card-button').forEach((button) => {
+      const cardId = button.getAttribute('data-id')
+      button.addEventListener('click', async () => {
+        //произошло замыкание x)
+        console.log(await Api.getCharactersByAnime(cardId))
+      })
+    })
   }
 }
 
