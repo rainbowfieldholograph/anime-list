@@ -8,7 +8,7 @@ class AnimeCards {
   renderAnimeCards(data) {
     let htmlContent = ''
 
-    data.forEach(async (anime) => {
+    data.forEach((anime) => {
       const { mal_id: id, title, image_url: imgUrl } = anime
       htmlContent += `
           <li class=${styles.card}>
