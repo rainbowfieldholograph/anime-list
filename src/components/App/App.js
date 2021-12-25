@@ -1,9 +1,9 @@
 import './App.css'
-import AnimeCardsList from '../AnimeCardList/AnimeCardsList'
+import AnimeCards from '../animeCards/AnimeCards'
 
 class App {
   async render() {
-    await AnimeCardsList.render()
+    await AnimeCards.render()
   }
 }
 
